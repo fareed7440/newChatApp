@@ -4,16 +4,15 @@ import { NavigationActions } from 'react-navigation'
 //import Login from '../../component/login';
 
 export default function signupRequest(data) {
-    // const {navigate} = this.props.navigation;
     return dispatch => {
         dispatch(SignupRequest());
-        return DB.auth.createUserWithEmailAndPassword(data.email, data.password).then((send) => {
+        return DB.auth.createUserWithEmailAndPassword(data.email, data.password).then(function(send){
+            send.updateProfile({displayName : data.name})
             const ref = DB.database.ref('signinUsers/' + send.uid);
             ref.set({ uid: send.uid, name: data.name, email: data.email }, success => {
                 dispatch(SignupRequestSuccess({
                     uid: send.uid, name: data.name, email: data.email
                 }),
-            //   this.props.navigation.dispatch(resetAction)
 
             )
               

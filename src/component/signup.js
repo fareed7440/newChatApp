@@ -56,13 +56,15 @@ validateEmail = (email) => {
 };
 
 componentWillReceiveProps(newProps) {
+    const {navigate} = this.props.navigation;
     console.log('55', this.props)
     setTimeout(() => {
         console.log('newprpss', newProps)
         if (newProps.xyz==true) {
-            newProps.navigation.dispatch(NavigationActions.reset({ index: 1, actions: [NavigationActions.navigate({ routeName: 'LoginCon' })] }))
+            navigate('LoginCon')
+           // newProps.navigation.dispatch(NavigationActions.reset({ index: 0, actions: [NavigationActions.navigate({ routeName: 'LoginCon' })] }))
         }
-    }, 5)
+    }, 3)
 }
 
      render() {

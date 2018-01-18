@@ -5,8 +5,8 @@ import dispatchChatingRequest from '../store/action/dispatchChatAction'
 function mapStateToProps(state) {
     console.log('statwe', state)
     return {
-       chatData : state.DispatchChatReducer.dispatchChat
-
+       chatData : state.DispatchChatReducer.dispatchChat,
+        reciever : state.DispatchChatReducer.reciever
     }
 }
 

@@ -39,16 +39,22 @@ onEnter=()=>{
 this.props.loginData(obj)
     console.log('object', obj)
     this.setState({email:'', password:''})
+   
 }
 }}
+login = true;
 componentWillReceiveProps(newProps) {
+    const {navigate} = this.props.navigation;
     console.log('55', this.props)
     setTimeout(() => {
         console.log('newprpss', newProps)
-        if (newProps.isLoged==true) {
-            newProps.navigation.dispatch(NavigationActions.reset({ index: 0, actions: [NavigationActions.navigate({ routeName: 'Chat' })] }))
+        if (newProps.isLoged==true && this.login) {
+            this.login = false;
+            navigate('ChatCon')
+          //  newProps.navigation.dispatch(NavigationActions.reset({ actions: [NavigationActions.navigate({ routeName: 'ChatCon' })] }))
+            
         }
-    }, 3)
+    }, 1)
 }
 validateEmail = (email) => {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

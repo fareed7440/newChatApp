@@ -30,7 +30,7 @@ export default class Home extends Component {
           firebase.auth().onAuthStateChanged(function(user) {
               console.log('userr',user)
               if (user) {
-                navigate('Chat',{email:user.email,uid: user.uid})
+                navigate('ChatCon',{email:user.email,uid: user.uid})
                // user.navigation.dispatch(NavigationActions.reset({ index: 0, actions: [NavigationActions.navigate({ routeName: 'Chat' })] }))
               } else {
                 console.log("false")

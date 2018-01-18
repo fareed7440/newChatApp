@@ -1,10 +1,13 @@
 
 import ActionTypes from '../action/actionTypes'
+import actionTypes from '../action/actionTypes';
 
 const INITIAL_STATE = {
    
     loading : false,
-    error : '' 
+    error : '' ,
+    recieveAt : '',
+    reciever: false
 }
 
  export default function DispatchChatReducer ( state = INITIAL_STATE,action){
@@ -13,7 +16,9 @@ const INITIAL_STATE = {
         return {...state , loading:true ,error : ''}
 
         case ActionTypes.DISPATCH_CHATING_REQUEST_SUCCESS:
-        return{...state, ...INITIAL_STATE, dispatchChat : action.data}
+        return{...state, ...INITIAL_STATE, dispatchChat : action.data, recieveAt : Date.now()}
+
+       
 
         case ActionTypes.DISPATCH_CHATING_REQUEST_FAILED: 
         return{...state,error:'Authentication Failed' , loading:false,isLogin: false}

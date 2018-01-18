@@ -1,10 +1,11 @@
 import React ,{Component} from 'react'
 import * as NB from 'native-base'
 import {Constants}from 'expo'
-import {Platform,View,Image,Modal,StyleSheet,Text,Button,TouchableOpacity} from'react-native'
+import {Platform,View,Image,Modal,StyleSheet,Text,Button,TouchableOpacity,ScrollView} from'react-native'
 import { NavigationActions } from 'react-navigation'
 import * as DB from '../firebase/database'
-var arr  = [];
+import Timestamp from 'react-timestamp';
+var arr2 = [];
 //const { params } = this.props.navigation.state;
 export default class Chat extends Component{
   
@@ -13,7 +14,8 @@ export default class Chat extends Component{
   static navigationOptions = ({ navigation }) =>{
     const { params = {} } = navigation.state
     return{
-    title: `${navigation.state.params.email}`,
+      title : 'Messaging',
+  //  title: `${navigation.state.params.email}`,
   //   header: ({state}) => {
   //     // get the "deepest" current params.
   // },
@@ -38,19 +40,24 @@ constructor(props){
   }
 
 }
+componentWillMount(){
+  this.props.chatData()
+}
 
 componentDidMount() {
+ arr2 = [];
   this.props.navigation.setParams({ handleSave: this.openModal.bind(this) });
  DB.database.ref('signinUsers/').on('value', snap=>{
     var data = snap.val();
     console.log('data',data);
     for(let key in data){
       data[key].key = key
-      arr.push(data[key])
-      console.log(arr)
+      arr2.push(data[key])
+      console.log(arr2)
     }
 
   })
+
 }
 setModalVisible(visible) {
   this.setState({ modalVisible: visible });
@@ -69,7 +76,10 @@ closeModal() {
 // }
 
     render(){
+      const chattt = this.props.mgsData ? this.props.mgsData : []
+      console.log('chattt', chattt)
       const {navigate} = this.props.navigation;
+      //var keyValue=item.key;
         return(
             <NB.Container>
  <NB.Content>
@@ -81,52 +91,58 @@ closeModal() {
           >
            
               <View style={{ height: '85%', width: '98%', opacity: 0.9 }}>
-               {arr.map((item , index)=>{
+              <ScrollView>
+               {arr2.map((item , index)=>{
                  console.log('items',item)
+                
                  return(
-                  
-                   <NB.ListItem key = {index} style = {{}}  onPress={()=>{navigate('ChatingCon',{name : item.name, uid : item.uid}),this.setState({modalVisible:false})}}>
-                     <NB.Text>{item.name}</NB.Text>
+                 
+                   <NB.ListItem key = {index} style = {{flexDirection: 'column',alignItems : 'flex-start'}}  onPress={()=>{navigate('ChatingCon',{name : item.name, uid : item.uid}),this.setState({modalVisible:false})}}>
+                     <NB.Text style={{alignSelf : 'flex-start'}}>{item.name}</NB.Text>
+                     <NB.Text style={{fontSize:9,alignSelf:'flex-start'}}>{item.email}</NB.Text>
                      </NB.ListItem>
-               
+                    
                  )
                })}
+                </ScrollView>
+               
                 <Button
                     onPress={() => this.closeModal()}
-                    title="Close modal"
+                    title="Close"
                 >
                 </Button>
             
             </View>
           </Modal>
         </View>
+{
+  chattt.map((i,ind)=>{
+    
+    console.log('kkkkkkkkkkkkk', i)
+  
 
-            <NB.List style={{width:'100%'}}>
- <NB.ListItem  avatar style={{marginLeft : -2}}>
-              <NB.Left>
-                <NB.Thumbnail square size={50} source={{ uri: 'https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg' }} />
-              </NB.Left>
-              <NB.Body>
-                <NB.Text>Kumar Pratik</NB.Text>
-                <NB.Text note>Doing what you like will always keep you happy . .</NB.Text>
-              </NB.Body>
-              <NB.Right>
-                <NB.Text note>3:43 pm</NB.Text>
-              </NB.Right>
-            </NB.ListItem>
-            <NB.ListItem avatar   style={{marginLeft : -2}}>
-              <NB.Left>
-                <NB.Thumbnail  square size={50} source={{ uri: 'https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg' }} />
-              </NB.Left>
-              <NB.Body>
-                <NB.Text>agha</NB.Text>
-                <NB.Text note>Doing what you like will always </NB.Text>
-              </NB.Body>
-              <NB.Right>
-                <NB.Text note>3:43 pm</NB.Text>
-              </NB.Right>
-            </NB.ListItem>
-            </NB.List>
+    
+    
+    return(
+      <NB.List   key = {ind} style={{width:'100%'}}>
+      <NB.ListItem  onPress={()=>{navigate('ChatingCon',{name : i.name,uid : i.uid})}}  avatar style={{marginLeft : -2}}>
+                   {/* <NB.Left>
+                     <NB.Thumbnail square size={50} source={{ uri: i.uri =='' ? i.uri : i.uri = '' }} />
+                   </NB.Left> */}
+                   <NB.Body>
+                     <NB.Text >{i.name}</NB.Text>
+                     <NB.Text note>{i.recentMsg}</NB.Text>
+                   </NB.Body>
+                   <NB.Right>
+                   {Date.now() - i.time < 86400000 ? 
+                                <Timestamp style={{fontSize : 11,marginLeft :20 }} time={i.time/1000 }component={Text} format='time'/>:
+                                <Timestamp style={{fontSize : 11,marginLeft :20 }} time={i.time/1000 }component={Text} format='date'/>}
+                   </NB.Right>
+                 </NB.ListItem>
+                 </NB.List>
+    )
+  })
+}
                </NB.Content>
              </NB.Container>
                

@@ -5,12 +5,6 @@ import actionTypes from './actionTypes';
 //import Login from '../../component/login';
 
 export default function loginRequest(data) {
-
-    const resetAction = NavigationActions.reset({
-        index: 1,
-        actions: [NavigationActions.navigate({ routeName: 'Login' })],
-      });
-    // const {navigate} = this.props.navigation;
     return dispatch => {
         dispatch(LoginRequest());
         return DB.auth.signInWithEmailAndPassword(data.email,data.password).then((sent)=>{
