@@ -68,12 +68,12 @@ onEnter =()=>{
                             style = {{ borderRadius : 20,alignSelf : 'flex-start',backgroundColor:'#A6B8E0' ,margin:2,minWidth:'10%',maxWidth : '50%',flexDirection: 'column',alignItems :'flex-start' }}
                             >
                             
-                                <NB.Text style={{fontSize : 11,alignSelf : 'flex-start', marginLeft :20 }}>{item.msg}</NB.Text>
+                                <NB.Text style={{fontSize : 11,alignSelf : 'flex-start', marginLeft:20 }}>{item.msg}</NB.Text>
                                 
              
                                 {Date.now() - item.time < 86400000 ? 
-                                <Timestamp style={{fontSize : 11,marginLeft :20 }} time={item.time/1000 }component={Text} format='time'/>:
-                                <Timestamp style={{fontSize : 11,marginLeft :20 }} time={item.time/1000 }component={Text} format='date'/>}
+                                <Timestamp style={{fontSize : 7,marginLeft :20 }} time={item.time/1000 }component={Text} format='time'/>:
+                                <Timestamp style={{fontSize : 7,marginLeft :20 }} time={item.time/1000 }component={Text} format='date'/>}
                            
   
                             </NB.ListItem>
@@ -84,8 +84,8 @@ onEnter =()=>{
                                 <NB.Text style={{fontSize : 11,marginLeft :20 ,alignSelf : 'flex-start'}}>{item.msg}</NB.Text>
                                     
                                     {Date.now() - item.time < 86400000 ? 
-                                <Timestamp style={{fontSize : 11,marginLeft :20 }} time={item.time/1000 }component={Text} format='time'/>:
-                                <Timestamp style={{fontSize : 11,marginLeft :20 }} time={item.time/1000 }component={Text} format='date'/>}
+                                <Timestamp style={{fontSize : 7,marginLeft :20  }} time={item.time/1000 }component={Text} format='time'/>:
+                                <Timestamp style={{fontSize : 7,marginLeft :20 }} time={item.time/1000 }component={Text} format='date'/>}
 
 
 
@@ -100,7 +100,10 @@ onEnter =()=>{
             <NB.Item regular >
                   
                     <NB.Input
-                
+                     //   inlineImageLeft='search_icon'
+                       autoGrow = {true}
+                       autoCorrect={true}
+                       numberOfLines = {4}
                     onChangeText ={(value)=>this.setState({msg: value})}
                     placeholder={'Lets Chat'}
                     value = {this.state.msg}

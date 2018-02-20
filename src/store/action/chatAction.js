@@ -56,6 +56,18 @@ dispatch(ChatRequestSuccess(arr))
 }
 
 
+export  function onLogoutRequest(){
+    return dispatch=>{
+       dispatch( LogoutRequest());
+       return DB.auth.signOut().then((data)=>{
+           dispatch(LogoutRequestSuccess(data))
+       })
+
+       
+        
+    }
+}
+
 
 
 function ChatRequest() {
@@ -74,5 +86,24 @@ function ChatRequestSuccess(data) {
 function ChatRequestFailed() {
     return {
         type: ActionType.CHAT_REQUEST_FAILED
+    }
+}
+
+function LogoutRequest() {
+    return {
+        type: actionTypes.LOGOUT_REQUEST
+    }
+}
+
+function LogoutRequestSuccess(data) {
+    return {
+        type: ActionType.LOGOUT_REQUEST_SUCCESS,
+        data,
+    }
+}
+
+function LogouttRequestFailed() {
+    return {
+        type: actionTypes.LOGOUT_REQUEST_FAILED
     }
 }

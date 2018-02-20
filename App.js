@@ -30,3 +30,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+
+
+
+
+
+
+
+// {
+//   "expo": {
+//     "sdkVersion": "22.0.0"
+//   }
+// }
+//{
